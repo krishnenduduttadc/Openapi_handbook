@@ -1,0 +1,233 @@
+openapi: 3.0.3
+info:
+  title: krishnendu's OpenAPI handbook
+  version: 1.0.0
+  description: OpenAPI master tutorial
+  termsOfService: test
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+externalDocs:
+  description: Find out more about Swagger
+  url: http://swagger.io
+servers:
+  - url: https://localhost:8000/
+tags:
+  - name: GIS
+    description: GIS survey
+  - name: VTS
+    description: Fleet services
+  - name: NPP
+    description: National Power Portal
+paths:
+  /getVehicleName:
+    get:
+      tags: 
+      - VTS
+      summary: Name of vehicle
+      description: Name of vehicle
+      responses:
+        '200':
+          description: get a vehicle
+          content:
+            application/json:
+              schema:
+               $ref:  '#/components/schemas/Vehicle'
+               
+  /createVehicle:
+    post:
+        tags:
+          - VTS
+        summary: Add a vehicle
+        description: Add a vehicle
+        operationId: addVehicle
+        requestBody:
+          description: Create a vehicle
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Vehicle'
+          required: true
+        responses:
+          '200':
+            description: Successful operation
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Vehicle'          
+          '405':
+            description: Invalid input  
+     
+  /updateVehicle/{id}:          
+    put:
+        tags:
+          - VTS
+        summary: Update vehicle number
+        description: This can used to update vehicle number.
+        operationId: updateUser
+        parameters:
+          - name: id
+            in: path
+            description: name that need to be deleted
+            required: true
+            schema:
+              type: string
+        requestBody:
+          description: Update an existent user in the store
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Vehicle'
+        responses:
+          default:
+            description: successful operation
+    
+  /deleteVehicle/{id}:        
+    delete:
+      tags:
+        - VTS
+      summary: Delete vehicle
+      description: Delete a vehicle.
+      operationId: deleteVehicle
+      parameters:
+        - name: id
+          in: path
+          description: Delete a vehicle
+          required: true
+          schema:
+            type: string
+      responses:
+        '400':
+          description: Invalid username supplied
+        '404':
+          description: User not found            
+          
+  /getPoles:
+    get:
+      tags: 
+      - GIS
+      summary: home page
+      description: home page
+      responses:
+        '200':
+          description: get poles of a feeder
+          content:
+            application/json:
+              schema:
+               $ref:  '#/components/schemas/Feeder'  
+               
+               
+  /createFeeder:
+      post:
+            tags:
+              - GIS
+            summary: Add a feeder
+            description: Add a feeder
+            operationId: addFeeder
+            requestBody:
+              description: Create a feeder
+              content:
+                application/json:
+                  schema:
+                    $ref: '#/components/schemas/Feeder'
+              required: true
+            responses:
+              '200':
+                description: Successful operation
+                content:
+                  application/json:
+                    schema:
+                      $ref: '#/components/schemas/Feeder'          
+              '405':
+                description: Invalid input   
+                
+                
+  /getAT&C:
+    get:
+      tags: 
+      - NPP
+      summary: home page
+      description: home page
+      responses:
+        '200':
+          description: get poles of a feeder
+          content:
+            application/json:
+              schema:
+               $ref:  '#/components/schemas/NPP'                
+               
+components: 
+  schemas:
+    Feeder:
+     type: object
+     properties: 
+      id: 
+        type: integer
+        format: int32
+        example: 10
+      name:
+        type: string
+        enum: 
+           - BANARAS ROAD 11 KV
+           - ARTI COTTON MILL
+           - BALTIKURE KALITAL 11 KV
+           - JAPANI GATE 11 KV
+           - BERADINGI 11 KV
+           - INACTIVE FDR
+           - DASNAGAR 11 KV
+           - SANTRAGACHI 11 KV
+           - BALITIKURI_HIT 11 KV
+           - LTFDR - DTR of
+           - C.T.I 11 KV
+           - MAHASWATI FDR 11 KV
+           - PADMA PUKUR
+           - KONA BAZAR
+           - BALTIKURI BAZAR 11 KV
+           - KADAMBARI 11KV
+        example: BANARAS ROAD 11 KV
+        
+        
+    Vehicle:
+     type: object
+     properties: 
+      id: 
+        type: integer
+        format: int32
+        example: 10
+      name:
+        type: string
+        enum: 
+          - AA
+          - BB
+        example: AA
+      vehicletype:
+        type: string
+        enum:
+          - Electric
+          - Petrol
+          - Diesel
+          - Hybrid
+        example: Petrol  
+        
+    NPP:
+     type: object
+     properties: 
+      id: 
+        type: integer
+        format: int32
+        example: 10
+      name:
+        type: string
+        enum: 
+          - AA
+          - BB
+        example: AA
+      vehicletype:
+        type: string
+        enum:
+          - 33 kV
+          - 11 kV
+        example: Petrol  
+          
+      
+                
